@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiforia Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Admin Specific Overrides */
+        body { background-color: #f4f4f4; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        .admin-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            flex: 1; /* Pushes footer down */
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Login Box */
+        .login-wrapper {
+            display: flex; justify-content: center; align-items: center; height: 60vh;
+        }
+        .login-box {
+            background: white; padding: 40px; width: 100%; max-width: 400px;
+            text-align: center; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .login-box h2 { margin-bottom: 20px; color: var(--primary-color); }
+        .login-input {
+            width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd;
+            border-radius: 4px; font-size: 1rem;
+        }
+        
+        /* Dashboard Header */
+        .dash-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 15px;
+        }
+        .dash-header h1 { font-size: 1.8rem; margin: 0; }
+        
+        /* Order Cards */
+        .order-card {
+            background: white; padding: 25px; margin-bottom: 20px;
+            border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 6px solid #b12704; /* Fixed accent color if var not set */
+            transition: transform 0.2s;
+        }
+        .order-card:hover { transform: translateY(-2px); }
+
+        .meta-row {
+            display: flex; justify-content: space-between; margin-bottom: 15px;
+            color: #777; font-size: 0.9rem; border-bottom: 1px solid #eee; padding-bottom: 10px;
+        }
+        
+        .customer-info { margin-bottom: 15px; line-height: 1.6; }
+        .customer-info strong { color: #333; font-size: 1.1rem; }
+
+        /* Items Table */
+        .order-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fafafa; }
+        .order-table th { text-align: left; padding: 10px; background: #eee; font-size: 0.85rem; }
+        .order-table td { padding: 10px; border-bottom: 1px solid #e0e0e0; font-size: 0.95rem; }
+        
+        .total-row {
+            text-align: right; font-size: 1.2rem; font-weight: bold;
+            color: #b12704; margin-top: 15px; padding-top: 10px;
+        }
+
+        /* Buttons */
+        .btn-logout { background-color: #333; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        .btn-logout:hover { background-color: #cc0000; }
+        
+        .btn-login { background-color: #333; color: white; width: 100%; padding: 12px; border: none; cursor: pointer; font-weight: bold; }
+        .btn-login:hover { background-color: #555; }
+    </style>
+</head>
+<body>
+
+    <header style="justify-content: center;">
+        <a href="index.html" class="logo">BEAUTIFORIA ADMIN</a>
+    </header>
+
+    <div class="admin-container">
+        
+        <div id="login-view" class="login-wrapper">
+            <div class="login-box">
+                <h2>Admin Access</h2>
+                <p style="color:#666; margin-bottom:20px;">Please enter your credentials.</p>
+                <input type="password" id="passwordInput" class="login-input" placeholder="Password">
+                <button onclick="adminLogin()" class="btn-login">LOGIN</button>
+                <p id="errorMsg" style="color:red; margin-top:10px; font-size:0.9rem;"></p>
+            </div>
+        </div>
+
+        <div id="dashboard-view" class="hidden">
+            <div class="dash-header">
+                <h1>Incoming Orders</h1>
+                <div>
+                    <button onclick="fetchOrders()" class="btn-logout" style="margin-right:10px; background:#555;">Refresh</button>
+                    <button onclick="logout()" class="btn-logout">Logout</button>
+                </div>
+            </div>
+            <div id="orders-container">Loading...</div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BEAUTIFORIA</h3>
+                <p>Internal Admin Dashboard<br>Authorized Personnel Only.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html" target="_blank">Go to Storefront</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>System</h3>
+                <p>Status: Online</p>
+                <p>Cairo, Egypt</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Beautiforia. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
