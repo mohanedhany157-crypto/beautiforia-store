@@ -305,67 +305,69 @@ footer { background-color: var(--primary-color); color: var(--white); padding: 4
 
 /* --- PASTE AT THE BOTTOM OF STYLE.CSS --- */
 
-/* Mobile Optimization */
+/* 1. Header Layout: Keeps Logo left, Cart/Menu right */
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background: #E3E6F3;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+/* 2. Mobile Optimization */
 @media (max-width: 799px) {
-
-    /* 1. Header Layout: Keeps Logo and Cart side-by-side at the top */
-    #header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px 20px;
-        position: sticky;
-        top: 0;
-        left: 0;
-        background: #fff; /* Ensure background is white */
-        z-index: 999;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
-    }
-
-    /* 2. Professional Mobile Menu List */
+    /* Hide the regular navbar initially */
     #navbar {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* Aligns text to left */
+        align-items: flex-start;
         justify-content: flex-start;
         position: fixed;
-        top: 70px; /* Pushes menu below the header */
-        right: -300px; /* Hides menu off-screen initially */
+        top: 0;
+        right: -300px; /* Hidden off-screen */
         height: 100vh;
-        width: 250px; /* Professional sidebar width */
+        width: 300px;
         background-color: #ffffff;
         box-shadow: 0 40px 60px rgba(0,0,0,0.1);
-        padding: 40px 20px;
-        transition: 0.3s ease; /* Smooth slide effect */
+        padding: 80px 0 0 10px;
+        transition: 0.3s;
     }
 
-    /* Active State (When menu is open) */
+    /* Use a class to show it via JavaScript later */
     #navbar.active {
-        right: 0; /* Slides menu in */
+        right: 0;
     }
 
-    /* 3. Style the List Items (<li>) */
+    /* Professional List Items */
     #navbar li {
-        margin-bottom: 20px;
-        width: 100%; /* Full width for easier tapping */
-        border-bottom: 1px solid #f0f0f0; /* Clean separator line */
-        padding-bottom: 10px;
+        margin-bottom: 25px;
     }
 
-    #navbar li a {
-        font-size: 18px;
-        font-weight: 500;
-        color: #333;
-        display: block; /* Makes the whole area clickable */
+    /* Cart and Hamburger Position */
+    #mobile {
+        display: flex;
+        align-items: center;
     }
 
-    /* 4. Ensure Cart is Always Visible on Mobile Header */
-    /* We move the cart icon OUT of the mobile menu logic visually */
-    #mobile-cart {
-        display: block;
-        font-size: 24px;
+    #mobile i {
         color: #1a1a1a;
-        margin-left: auto; /* Pushes it to the right */
-        margin-right: 20px; /* Space between cart and hamburger menu */
+        font-size: 24px;
+        padding-left: 20px;
+    }
+    
+    /* Close Button inside the menu */
+    #close {
+        display: block;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        color: #222;
+        font-size: 24px;
+        text-decoration: none;
     }
 }

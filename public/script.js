@@ -1,4 +1,4 @@
-/* script.js - COMPLETE VERSION (With Dynamic Shipping Fees) */
+/* script.js - COMPLETE VERSION (With Mobile Menu & Dynamic Shipping) */
 
 // ------------------------------------------------------------------
 // 1. FIREBASE SETUP
@@ -459,6 +459,26 @@ window.placeOrder = async function() {
         btn.innerText = "PLACE ORDER | تنفيذ الطلب";
         btn.disabled = false;
     }
+}
+
+// ------------------------------------------------------------------
+// 10. MOBILE MENU LOGIC (NEW ADDITION)
+// ------------------------------------------------------------------
+const bar = document.getElementById('bar');
+const close = document.getElementById('close');
+const nav = document.getElementById('navbar');
+
+if (bar) {
+    bar.addEventListener('click', () => {
+        nav.classList.add('active');
+    });
+}
+
+if (close) {
+    close.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevents page jumping
+        nav.classList.remove('active');
+    });
 }
 
 // Initial Load
