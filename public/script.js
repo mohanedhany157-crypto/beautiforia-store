@@ -1,4 +1,4 @@
-/* script.js - UPDATED VERSION (Split Products: 125ml, 225ml, Bundle) */
+/* script.js - UPDATED VERSION (Best Sellers = Random 4 Full Sets) */
 
 // ------------------------------------------------------------------
 // 1. FIREBASE SETUP
@@ -248,7 +248,15 @@ const isHomePage = document.body.classList.contains('home-page');
 
 if (productGrid) {
     if (isHomePage) {
-        renderProducts(products.slice(0, 8), productGrid); // Show first 8 on home
+        // --- UPDATED LOGIC FOR BEST SELLERS ---
+        // 1. Filter only "Full Set" products
+        const fullSets = products.filter(p => p.name.includes("Full Set"));
+        
+        // 2. Randomize them (shuffle the array)
+        const randomFour = fullSets.sort(() => 0.5 - Math.random()).slice(0, 4);
+        
+        // 3. Render the random 4
+        renderProducts(randomFour, productGrid); 
     } else {
         const categories = [...new Set(products.map(p => p.category))];
         categories.forEach(cat => {
