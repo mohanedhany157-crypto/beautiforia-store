@@ -1,4 +1,4 @@
-/* script.js - COMPLETE VERSION (With Mobile Menu & Dynamic Shipping) */
+/* script.js - UPDATED VERSION (Split Products: 125ml, 225ml, Bundle) */
 
 // ------------------------------------------------------------------
 // 1. FIREBASE SETUP
@@ -25,99 +25,218 @@ console.log("Firebase Connected");
 // 2. THE MASTER DATABASE
 // ------------------------------------------------------------------
 const products = [
+    // --- 1. NOIR (Men) ---
     {
-        id: 1, name: "Noir Body Mist For Men", nameAr: "عطر النوار للرجال",
-        price: 150, image: "images/noir men.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>أناقة الغموض.. وانتعاش يدوم.</strong><br>استمتع بتجربة عطرية تجمع بين القوة والانتعاش.`
+        id: 1, name: "Noir - 125ml", nameAr: "عطر النوار - عبوة صغيرة",
+        price: 150, image: "small/noir small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>أناقة الغموض.. وانتعاش يدوم.</strong><br>الحجم الصغير المثالي.`
     },
     {
-        id: 2, name: "Woman Sugar Body Mist", nameAr: "بودي ميست وومان شوجر",
-        price: 150, image: "images/woman sugar.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
+        id: 2, name: "Noir - 225ml", nameAr: "عطر النوار - عبوة كبيرة",
+        price: 225, image: "big/noir big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>أناقة الغموض.. وانتعاش يدوم.</strong><br>العبوة الكبيرة للتوفير.`
+    },
+    {
+        id: 3, name: "Noir - Full Set", nameAr: "عطر النوار - الطقم الكامل",
+        price: 300, image: "images/noir men.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>أناقة الغموض.. وانتعاش يدوم.</strong><br>احصل على العبوتین معاً بسعر خاص.`
+    },
+
+    // --- 2. WOMAN SUGAR ---
+    {
+        id: 4, name: "Woman Sugar - 125ml", nameAr: "وومان شوجر - عبوة صغيرة",
+        price: 150, image: "small/woman small.png", category: "Body Mist", volume: "125 ml",
         desc: `<strong>أنوثة طاغية.. وسحر لا يقاوم.</strong><br>دلّلي نفسك مع Woman Sugar.`
     },
     {
-        id: 3, name: "Lovely Body Mist", nameAr: "بودي ميست لافلي",
-        price: 150, image: "images/lovely.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>تناغم الرقة والدفء.</strong><br>يجمع Lovely Body Mist بين عبير الزهور ودفء الأخشاب.`
+        id: 5, name: "Woman Sugar - 225ml", nameAr: "وومان شوجر - عبوة كبيرة",
+        price: 225, image: "big/woman big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>أنوثة طاغية.. وسحر لا يقاوم.</strong><br>العبوة الكبيرة.`
     },
     {
-        id: 4, name: "Coconut Body Mist", nameAr: "بودي ميست جوز الهند",
-        price: 150, image: "images/coconut.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>انتعاش استوائي.</strong><br>إحساس الشواطئ الدافئة مع Coconut Body Mist.`
+        id: 6, name: "Woman Sugar - Full Set", nameAr: "وومان شوجر - الطقم الكامل",
+        price: 300, image: "images/woman sugar.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>أنوثة طاغية.. وسحر لا يقاوم.</strong><br>العرض الأوفر (عبوة صغيرة + كبيرة).`
+    },
+
+    // --- 3. LOVELY ---
+    {
+        id: 7, name: "Lovly - 125ml", nameAr: "لافلي - عبوة صغيرة",
+        price: 150, image: "small/lovely small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>تناغم الرقة والدفء.</strong>`
     },
     {
-        id: 5, name: "So Sexy Body Mist", nameAr: "بودي ميست سو سيكسي",
-        price: 150, image: "images/so sexy.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>سر الجاذبية الشرقية.</strong><br>للباحثات عن التألق والحضور القوي.`
+        id: 8, name: "Lovly - 225ml", nameAr: "لافلي - عبوة كبيرة",
+        price: 225, image: "big/lovely big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>تناغم الرقة والدفء.</strong>`
     },
     {
-        id: 6, name: "Red Night Body Mist", nameAr: "بودي ميست ريد نايت",
-        price: 150, image: "images/red  night.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>غموض الليل.</strong><br>اختياركِ للأمسيات المميزة.`
+        id: 9, name: "Lovly - Full Set", nameAr: "لافلي - الطقم الكامل",
+        price: 300, image: "images/lovely.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>تناغم الرقة والدفء.</strong><br>الطقم الكامل بسعر مميز.`
+    },
+
+    // --- 4. COCONUT ---
+    {
+        id: 10, name: "Coconut - 125ml", nameAr: "جوز الهند - عبوة صغيرة",
+        price: 150, image: "small/coconut  small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>انتعاش استوائي.</strong>`
     },
     {
-        id: 7, name: "Bubbly Stars Body Mist", nameAr: "بودي ميست بوبلي ستارز",
-        price: 150, image: "images/bubbly splash.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>فخامة ناعمة.</strong><br>تجربة عطرية تجمع بين الدفء الشرقي.`
+        id: 11, name: "Coconut - 225ml", nameAr: "جوز الهند - عبوة كبيرة",
+        price: 225, image: "big/coconut big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>انتعاش استوائي.</strong>`
     },
     {
-        id: 8, name: "Bonbon Body Mist", nameAr: "بودي ميست بونبون",
-        price: 150, image: "images/bonbon.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>عبير الرقة.</strong><br>توليفة ساحرة تمنح جسمكِ الحيوية.`
+        id: 12, name: "Coconut - Full Set", nameAr: "جوز الهند - الطقم الكامل",
+        price: 300, image: "images/coconut.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>انتعاش استوائي.</strong><br>عرض خاص (عبوتين).`
+    },
+
+    // --- 5. SO SEXY ---
+    {
+        id: 13, name: "So Sexy - 125ml", nameAr: "سو سيكسي - عبوة صغيرة",
+        price: 150, image: "small/so sexy small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>سر الجاذبية الشرقية.</strong>`
     },
     {
-        id: 9, name: "Strawberry & Cream", nameAr: "بودي ميست ستروبيري آند كريم",
-        price: 150, image: "images/strawberry.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>انتعاش الفراولة.</strong><br>تجربة عطرية مستوحاة من الحلويات الفرنسية.`
+        id: 14, name: "So Sexy - 225ml", nameAr: "سو سيكسي - عبوة كبيرة",
+        price: 225, image: "big/so sexy big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>سر الجاذبية الشرقية.</strong>`
     },
     {
-        id: 10, name: "Joyful Body Mist", nameAr: "بودي ميست جوي فول",
-        price: 150, image: "images/joyful.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>انتعاش الزهور.</strong><br>يمنحكِ الثقة والانتعاش طوال اليوم.`
+        id: 15, name: "So Sexy - Full Set", nameAr: "سو سيكسي - الطقم الكامل",
+        price: 300, image: "images/so sexy.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>سر الجاذبية الشرقية.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 6. RED NIGHT ---
+    {
+        id: 16, name: "Red Night - 125ml", nameAr: "ريد نايت - عبوة صغيرة",
+        price: 150, image: "small/red night small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>غموض الليل.</strong>`
     },
     {
-        id: 11, name: "Dreams Body Mist", nameAr: "بودي ميست دريمز",
-        price: 150, image: "images/dreams.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>عالم من الأحلام.</strong><br>لمسة سحرية برائحة زهرية.`
+        id: 17, name: "Red Night - 225ml", nameAr: "ريد نايت - عبوة كبيرة",
+        price: 225, image: "big/red night big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>غموض الليل.</strong>`
     },
     {
-        id: 12, name: "Velvet Blush Body Mist", nameAr: "بودي ميست فيلفيت بلاش",
-        price: 150, image: "images/velvet blush.jpg",
-        category: "Body Mist", volume: "125 ml",
-        variants: [{ size: "125 ml", price: 150 }, { size: "225 ml", price: 225 }],
-        desc: `<strong>الأنوثة والنعومة.</strong><br>سحر الفواكه ورقة الزهور.`
+        id: 18, name: "Red Night - Full Set", nameAr: "ريد نايت - الطقم الكامل",
+        price: 300, image: "images/red  night.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>غموض الليل.</strong><br>العرض الأوفر.`
+    },
+
+    // --- 7. BUBBLY STARS ---
+    {
+        id: 19, name: "Bubbly Stars - 125ml", nameAr: "بوبلي ستارز - عبوة صغيرة",
+        price: 150, image: "small/bubbly small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>فخامة ناعمة.</strong>`
+    },
+    {
+        id: 20, name: "Bubbly Stars - 225ml", nameAr: "بوبلي ستارز - عبوة كبيرة",
+        price: 225, image: "big/bubbly big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>فخامة ناعمة.</strong>`
+    },
+    {
+        id: 21, name: "Bubbly Stars - Full Set", nameAr: "بوبلي ستارز - الطقم الكامل",
+        price: 300, image: "images/bubbly splash.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>فخامة ناعمة.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 8. BONBON ---
+    {
+        id: 22, name: "Bonbon - 125ml", nameAr: "بونبون - عبوة صغيرة",
+        price: 150, image: "small/bonbon small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>عبير الرقة.</strong>`
+    },
+    {
+        id: 23, name: "Bonbon - 225ml", nameAr: "بونبون - عبوة كبيرة",
+        price: 225, image: "big/bonbon big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>عبير الرقة.</strong>`
+    },
+    {
+        id: 24, name: "Bonbon - Full Set", nameAr: "بونبون - الطقم الكامل",
+        price: 300, image: "images/bonbon.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>عبير الرقة.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 9. STRAWBERRY & CREAM ---
+    {
+        id: 25, name: "Strawberry - 125ml", nameAr: "فراولة - عبوة صغيرة",
+        price: 150, image: "small/strawyberry small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>انتعاش الفراولة.</strong>`
+    },
+    {
+        id: 26, name: "Strawberry - 225ml", nameAr: "فراولة - عبوة كبيرة",
+        price: 225, image: "big/straw berry big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>انتعاش الفراولة.</strong>`
+    },
+    {
+        id: 27, name: "Strawberry - Full Set", nameAr: "فراولة - الطقم الكامل",
+        price: 300, image: "images/strawberry.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>انتعاش الفراولة.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 10. JOYFUL ---
+    {
+        id: 28, name: "Joyful - 125ml", nameAr: "جوي فول - عبوة صغيرة",
+        price: 150, image: "small/joyful small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>انتعاش الزهور.</strong>`
+    },
+    {
+        id: 29, name: "Joyful - 225ml", nameAr: "جوي فول - عبوة كبيرة",
+        price: 225, image: "big/joyful big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>انتعاش الزهور.</strong>`
+    },
+    {
+        id: 30, name: "Joyful - Full Set", nameAr: "جوي فول - الطقم الكامل",
+        price: 300, image: "images/joyful.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>انتعاش الزهور.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 11. DREAMS ---
+    {
+        id: 31, name: "Dreams - 125ml", nameAr: "دريمز - عبوة صغيرة",
+        price: 150, image: "small/dream small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>عالم من الأحلام.</strong>`
+    },
+    {
+        id: 32, name: "Dreams - 225ml", nameAr: "دريمز - عبوة كبيرة",
+        price: 225, image: "big/dream big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>عالم من الأحلام.</strong>`
+    },
+    {
+        id: 33, name: "Dreams - Full Set", nameAr: "دريمز - الطقم الكامل",
+        price: 300, image: "images/dreams both.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>عالم من الأحلام.</strong><br>الطقم الكامل.`
+    },
+
+    // --- 12. VELVET BLUSH ---
+    {
+        id: 34, name: "Velvet Blush - 125ml", nameAr: "فيلفيت بلاش - عبوة صغيرة",
+        price: 150, image: "small/velvet small.png", category: "Body Mist", volume: "125 ml",
+        desc: `<strong>الأنوثة والنعومة.</strong>`
+    },
+    {
+        id: 35, name: "Velvet Blush - 225ml", nameAr: "فيلفيت بلاش - عبوة كبيرة",
+        price: 225, image: "big/velvet big.png", category: "Body Mist", volume: "225 ml",
+        desc: `<strong>الأنوثة والنعومة.</strong>`
+    },
+    {
+        id: 36, name: "Velvet Blush - Full Set", nameAr: "فيلفيت بلاش - الطقم الكامل",
+        price: 300, image: "images/velvet blush.jpg", category: "Body Mist", volume: "125ml + 225ml",
+        desc: `<strong>الأنوثة والنعومة.</strong><br>الطقم الكامل.`
     },
     
-    // --- OTHER PRODUCTS (COMING SOON) ---
-    { id: 13, name: "Hair Wax Stick", nameAr: "واكس ستيك للشعر", price: 250, image: "https://placehold.co/600x800/333/FFF?text=Hair+Wax", category: "Hair Care", volume: "75g", desc: "تصفيف مثالي." },
-    { id: 14, name: "Sunscreen SPF50+", nameAr: "واقي شمس SPF50+", price: 400, image: "https://placehold.co/600x800/FFA500/FFF?text=Sunscreen", category: "Skincare", volume: "50ml", desc: "حماية قصوى." },
-    { id: 15, name: "Collagen Cream", nameAr: "كريم كولاجين", price: 450, image: "https://placehold.co/600x800/ADD8E6/000?text=Collagen", category: "Skincare", volume: "100ml", desc: "نضارة وشباب." },
-    { id: 16, name: "Violet Rose Whitening Deo", nameAr: "مزيل عرق فيوليت روز", price: 150, image: "https://placehold.co/600x800/EE82EE/000?text=Violet+Deo", category: "Deodorant", volume: "50ml", desc: "حماية وتفتيح." },
-    { id: 17, name: "Night Kiss Whitening Deo", nameAr: "مزيل عرق نايت كيس", price: 150, image: "https://placehold.co/600x800/191970/FFF?text=Night+Deo", category: "Deodorant", volume: "50ml", desc: "جاذبية المساء." },
-    { id: 18, name: "Oud Sauvage Whitening Deo", nameAr: "مزيل عرق عود سوفاج", price: 150, image: "https://placehold.co/600x800/8B4513/FFF?text=Oud+Deo", category: "Deodorant", volume: "50ml", desc: "فخامة العود." },
-    { id: 19, name: "Blacknight Whitening Deo", nameAr: "مزيل عرق بلاك نايت", price: 150, image: "https://placehold.co/600x800/000/FFF?text=Blacknight", category: "Deodorant", volume: "50ml", desc: "قوة وثقة." }
+    // --- OTHER PRODUCTS (IDs SHIFTED to 37+) ---
+    { id: 37, name: "Hair Wax Stick", nameAr: "واكس ستيك للشعر", price: 250, image: "https://placehold.co/600x800/333/FFF?text=Hair+Wax", category: "Hair Care", volume: "75g", desc: "تصفيف مثالي." },
+    { id: 38, name: "Sunscreen SPF50+", nameAr: "واقي شمس SPF50+", price: 400, image: "https://placehold.co/600x800/FFA500/FFF?text=Sunscreen", category: "Skincare", volume: "50ml", desc: "حماية قصوى." },
+    { id: 39, name: "Collagen Cream", nameAr: "كريم كولاجين", price: 450, image: "https://placehold.co/600x800/ADD8E6/000?text=Collagen", category: "Skincare", volume: "100ml", desc: "نضارة وشباب." },
+    { id: 40, name: "Violet Rose Whitening Deo", nameAr: "مزيل عرق فيوليت روز", price: 150, image: "https://placehold.co/600x800/EE82EE/000?text=Violet+Deo", category: "Deodorant", volume: "50ml", desc: "حماية وتفتيح." },
+    { id: 41, name: "Night Kiss Whitening Deo", nameAr: "مزيل عرق نايت كيس", price: 150, image: "https://placehold.co/600x800/191970/FFF?text=Night+Deo", category: "Deodorant", volume: "50ml", desc: "جاذبية المساء." },
+    { id: 42, name: "Oud Sauvage Whitening Deo", nameAr: "مزيل عرق عود سوفاج", price: 150, image: "https://placehold.co/600x800/8B4513/FFF?text=Oud+Deo", category: "Deodorant", volume: "50ml", desc: "فخامة العود." },
+    { id: 43, name: "Blacknight Whitening Deo", nameAr: "مزيل عرق بلاك نايت", price: 150, image: "https://placehold.co/600x800/000/FFF?text=Blacknight", category: "Deodorant", volume: "50ml", desc: "قوة وثقة." }
 ];
 
 // 3. LOAD CART
@@ -129,7 +248,7 @@ const isHomePage = document.body.classList.contains('home-page');
 
 if (productGrid) {
     if (isHomePage) {
-        renderProducts(products.slice(0, 4), productGrid);
+        renderProducts(products.slice(0, 8), productGrid); // Show first 8 on home
     } else {
         const categories = [...new Set(products.map(p => p.category))];
         categories.forEach(cat => {
@@ -156,7 +275,7 @@ function renderProducts(items, container) {
         card.className = 'product-card';
         
         const isBodyMist = product.category === "Body Mist";
-        const priceDisplay = product.variants ? `Starting EGP ${product.price}` : `EGP ${product.price}`;
+        const priceDisplay = `EGP ${product.price}`;
         
         const buttonHtml = isBodyMist 
             ? `<button class="btn" onclick="addToCart(${product.id})">Add to Cart</button>`
@@ -462,7 +581,7 @@ window.placeOrder = async function() {
 }
 
 // ------------------------------------------------------------------
-// 10. MOBILE MENU LOGIC (NEW ADDITION)
+// 10. MOBILE MENU LOGIC
 // ------------------------------------------------------------------
 const bar = document.getElementById('bar');
 const close = document.getElementById('close');
